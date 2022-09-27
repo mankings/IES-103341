@@ -23,7 +23,7 @@ project created with:
 > mvn archetype:generate -DgroupId=pt.mankings.ies -DartifactId=weather-forecast -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
 
 ### Costumizing pom.xml
-Added:
+Added to **pom.xml**:
 ```
     <organization>
         <name>DETI</name>
@@ -32,9 +32,31 @@ Added:
 
     <developers>
         <developer>
-        <id>mankings</id>
-        <name>João Miguel Almeida Matos</name>
-        <email>miguelamatos@ua.pt</email>
+            <id>mankings</id>
+            <name>João Miguel Almeida Matos</name>
+            <email>miguelamatos@ua.pt</email>
         </developer>
     </developers>
 ```
+
+### Declaring dependencies
+Added to **pom.xml** dependencies:
+```
+    <dependency>
+        <groupId>com.squareup.retrofit2</groupId>
+        <artifactId>retrofit</artifactId>
+        <version>2.9.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.9.1</version>
+    </dependency>
+```
+
+### Running the project
+> mvn exec:java -Dexec.mainClass="pt.mankings.ies.WeatherStarter" -Dexec.args="[city id]" -Dexec.cleanupDaemonThreads=false
+
+#### some city ids:
+1010500 **aveiro**
+
