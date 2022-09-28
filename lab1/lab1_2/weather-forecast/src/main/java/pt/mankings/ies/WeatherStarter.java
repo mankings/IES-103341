@@ -20,7 +20,7 @@ public class WeatherStarter {
 
     public static void  main(String[] args) {
         if(args.length != 1) {
-            System.err.println("Argument error! Please specify a valid city ID or city name.");
+            System.err.println("Argument error! Please specify a city ID as the only argument.");
             System.exit(1);
         }
 
