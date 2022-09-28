@@ -58,7 +58,7 @@ public class WeatherStarter {
             if (forecast != null && city_name != null) {
                 System.out.println("\n-------- Weather Forecast for " + city_name + " --------");
                 ListIterator<CityForecast> dayIterator = forecast.getData().listIterator();
-                for(int i = 0; i < 5; i++) {
+                while(dayIterator.hasNext()) {
                     CityForecast dayData = dayIterator.next();
 
                     System.out.println("    --- " + dayData.getForecastDate() + " ---");
@@ -68,7 +68,14 @@ public class WeatherStarter {
                     System.out.println();
                 }
             } else {
-                System.out.println( "No results for this request!");
+                System.out.printf("-----------%nNo results for this request!%n");
+                System.out.printf("%n   Available places:%n");
+                placeIterator = places.getData().listIterator();
+                while(placeIterator.hasNext()) {
+                    PlaceData place = placeIterator.next();
+                    System.out.printf("%-25s %8d %n", place.getLocal(), place.getGlobalIdLocal());
+                }
+                System.out.printf("-----------%n%n");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
