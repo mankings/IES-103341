@@ -6,7 +6,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ListIterator;
-import java.util.Iterator;
 
 import pt.mankings.ies.ipma_client.CityForecast;
 import pt.mankings.ies.ipma_client.IpmaCityForecast;

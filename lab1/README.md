@@ -57,6 +57,4 @@ Added to **pom.xml** dependencies:
 ### Running the project
 > mvn exec:java -Dexec.mainClass="pt.mankings.ies.WeatherStarter" -Dexec.args="[city id]" -Dexec.cleanupDaemonThreads=false
 
-#### some city ids:
-1010500 **aveiro**
-
+if you city id is non-existing, the program will provide all available id's for you to choose one.
