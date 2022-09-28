@@ -5,26 +5,39 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.util.ListIterator;
-
 import pt.mankings.ies.ipma_client.CityForecast;
 import pt.mankings.ies.ipma_client.IpmaCityForecast;
 import pt.mankings.ies.ipma_client.IpmaDistritsIslands;
 import pt.mankings.ies.ipma_client.IpmaService;
 import pt.mankings.ies.ipma_client.PlaceData;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+import java.util.ListIterator;
+
 /**
  * demonstrates the use of the IPMA API for weather forecast
  */
 public class WeatherStarter {
 
+    private static Logger logger = LogManager.getLogger(WeatherStarter.class);
+
     public static void  main(String[] args) {
         if(args.length != 1) {
             System.err.println("Argument error! Please specify a city ID as the only argument.");
+            logger.error("Didn't provide a single argument");
             System.exit(1);
         }
 
-        int city_id = Integer.parseInt(args[0]);
+        int city_id = 0;
+        try {
+            city_id = Integer.parseInt(args[0]);
+        } catch(NumberFormatException e) {
+            System.err.println("Argument error! Expected and integer value.");
+            logger.error("Didn't provide an integer");
+            System.exit(1);
+        }
 
         // get a retrofit instance, loaded with the GSon lib to convert JSON into objects
         Retrofit retrofit = new Retrofit.Builder()
@@ -40,7 +53,9 @@ public class WeatherStarter {
 
         try {
             Response<IpmaCityForecast> apiResponse1 = callSync1.execute();
+            logger.info("Got response1");
             Response<IpmaDistritsIslands> apiResponse2 = callSync2.execute();
+            logger.info("Got response2");
             IpmaCityForecast forecast = apiResponse1.body();
             IpmaDistritsIslands places = apiResponse2.body();
 
@@ -49,6 +64,7 @@ public class WeatherStarter {
             while(placeIterator.hasNext()) {
                 PlaceData place = placeIterator.next();
                 if(place.getGlobalIdLocal() == city_id) {
+                    logger.info("Got an id match");
                     city_name = place.getLocal();
                     break;
                 }
@@ -67,6 +83,7 @@ public class WeatherStarter {
                     System.out.println();
                 }
             } else {
+                logger.info("Didn't get an id match");
                 System.out.printf("-----------%nNo results for this request!%n");
                 System.out.printf("%n   Available places:%n");
                 placeIterator = places.getData().listIterator();
@@ -77,6 +94,7 @@ public class WeatherStarter {
                 System.out.printf("-----------%n%n");
             }
         } catch (Exception ex) {
+            logger.error("Exception error");
             ex.printStackTrace();
         }
     }
