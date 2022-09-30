@@ -22,9 +22,13 @@ Other POM elements are;:
 * resources
 
 ## Building the project
-> mvn package
+```
+$ mvn package
+```
 
 ## Running the project
-> mvn exec:java -Dexec.mainClass="pt.mankings.ies.WeatherStarter" -Dexec.args="[city id]" -Dexec.cleanupDaemonThreads=false
+```
+$ mvn exec:java -Dexec.mainClass="pt.mankings.ies.WeatherStarter" -Dexec.args="[city id]" -Dexec.cleanupDaemonThreads=false
+```
 
 If the city id you provide is non-existing, the program will provide all available id's for you to choose one.
