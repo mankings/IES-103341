@@ -3,7 +3,9 @@ package pt.mankings.ies.moviequoter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
@@ -14,13 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class QuoteController {
 
     private final String quotefile = "catchphrases.txt";
-    private final String defaultmsg = "Hello %s! Ready for some quotes?";
-
-    // @GetMapping("/api")
-    // public Quote quote(@RequestParam(name = "user", defaultValue = "World")
-    // String user) {
-    // return new Quote(counter.incrementAndGet(), String.format(defaultmsg, user));
-    // }
 
     @GetMapping("/api/quote")
     public Quote randomQuote() {
@@ -28,17 +23,23 @@ public class QuoteController {
         return quotes.get(randInt(quotes.size()));
     }
 
-    // @GetMapping("/api/shows")
-    // public Quote getShows() {
-    //     ArrayList<Quote> quotes = loadQuotes();
-    // }
+    @GetMapping("/api/shows")
+    public HashSet<Show> getShows() {
+        ArrayList<Quote> quotes = loadQuotes();
+        HashSet<Show> shows = new HashSet<>();
+        for (Quote q : quotes) 
+            if(!shows.contains(q.getShow())) 
+                shows.add(q.getShow());
 
-    @GetMapping("api/quotes")
-    public Quote randomQuoteFromShow(@RequestParam(name = "show", defaultValue = "") String show) {
+        return shows;
+    }
+
+    @GetMapping("/api/quotes")
+    public Quote randomQuoteFromShow(@RequestParam(name = "show", defaultValue = "1") long showid) {
         ArrayList<Quote> quotes = loadQuotes();
         ArrayList<Quote> filteredQuotes = new ArrayList<>();
         for(Quote q : quotes)
-            if (q.getShow().matches(show))
+            if (q.getShow().getId() == showid)
                 filteredQuotes.add(q);
         
         return filteredQuotes.get(randInt(filteredQuotes.size()));
@@ -47,14 +48,34 @@ public class QuoteController {
 
     private ArrayList<Quote> loadQuotes() {
         ArrayList<Quote> quotes = new ArrayList<>();
+        Set<Show> shows = new HashSet<>();
+
+        AtomicLong counter = new AtomicLong();
 
         Scanner filesc = null;
         try {
             filesc = new Scanner(new File(quotefile));
+
             while (filesc.hasNextLine()) {
                 String[] data = filesc.nextLine().split(";");
-                quotes.add(new Quote(data[0], data[1]));
+                Show show = null;
+                
+                for(Show s : shows) {
+                    if(s.getName().matches(data[1])) {
+                        show = s;
+                        break;
+                    }
+                }
+
+                if(show == null) {
+                    show = new Show(counter.incrementAndGet(), data[1]);
+                    shows.add(show);
+                }
+
+                Quote quote = new Quote(data[0], show);
+                quotes.add(quote);
             }
+
             filesc.close();
         } catch (FileNotFoundException e) {
             System.err.println("Error: Quote file not found.");

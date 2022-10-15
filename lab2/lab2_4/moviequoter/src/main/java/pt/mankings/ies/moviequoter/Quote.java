@@ -3,14 +3,14 @@ package pt.mankings.ies.moviequoter;
 public class Quote {
     
     private final String quote;
-    private final String show;
+    private final Show show;
 
-    public Quote(String quote, String show) {
-        this.show = show;
+    public Quote(String quote, Show show) {
         this.quote = quote;
+        this.show = show;
     }
 
-    public String getShow() {
+    public Show getShow() {
         return show;
     }
 
