@@ -26,6 +26,11 @@
                                 <input type="text" th:field="*{showname}" class="form-control" id="showname" placeholder="Show Name">
                                 <span th:if="${#fields.hasErrors('showname')}" th:errors="*{showname}" class="text-danger"></span>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label for="author" class="col-form-label">Author</label>
+                                <input type="text" th:field="*{author}" class="form-control" id="author" placeholder="Author">
+                                <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text-danger"></span>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mt-5">

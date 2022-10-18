@@ -12,17 +12,21 @@ public class Quote {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotBlank(message = "Name is mandatory")
+    @NotBlank(message = "Quote text is mandatory")
     private String quotetext;
 
-    @NotBlank(message = "Email is mandatory")
+    @NotBlank(message = "Show name is mandatory")
     private String showname;
+
+    @NotBlank(message = "Author name is mandatory")
+    private String author;
 
     public Quote() {}
 
-    public Quote(String quotetext, String showname) {
+    public Quote(String quotetext, String showname, String author) {
         this.quotetext = quotetext;
         this.showname = showname;
+        this.author = author;
     }
 
     public void setId(long id) {
@@ -49,7 +53,15 @@ public class Quote {
         return showname;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
     public String toString() {
-        return "Quote{quotetext=" + quotetext +", showname=" + showname + "}";
+        return "Quote{quotetext=" + quotetext +", showname=" + showname + ", author=" + author + "}";
     }
 }

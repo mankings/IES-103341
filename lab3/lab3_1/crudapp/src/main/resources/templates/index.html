@@ -24,6 +24,7 @@
                             <tr>
                                 <th>Quote</th>
                                 <th>Show Name</th>
+                                <th>Author</th>
                                 <th>Edit Quote</th>
                                 <th>Delete</th>
                             </tr>
@@ -32,6 +33,7 @@
                             <tr th:each="quote : ${quotes}">
                                 <td th:text="${quote.quotetext}"></td>
                                 <td th:text="${quote.showname}"></td>
+                                <td th:text="${quote.author}"></td>                                
                                 <td><a th:href="@{/edit/{id}(id=${quote.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                 <td><a th:href="@{/delete/{id}(id=${quote.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>
