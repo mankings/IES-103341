@@ -1,5 +1,7 @@
 package mankings.ies.lab3.crudapp;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +69,19 @@ public class QuoteController {
         quoteRepository.delete(quote);
 
         return "redirect:/index";
+    }
+
+    @GetMapping("/randomquote")
+    public String randomQuote(Model model) {
+        long max = randomInt(quoteRepository.count());
+        Quote quote = quoteRepository.findById(max).orElseThrow(() -> new IllegalArgumentException("Invalid quote Id: " + max));
+        model.addAttribute("quote", quote);
+
+        return "quote";
+    }
+
+    // aux functions
+    private int randomInt(Long max) {
+        return ThreadLocalRandom.current().nextInt(1, max.intValue() + 1);
     }
 }
