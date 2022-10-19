@@ -29,3 +29,14 @@ The *NewQuote* class is an auxiliary class for the persistence logic. No data is
 * **/addquote** (POST) - insert a new quote
 * **/updatequote/{id}** (PUT) - update a quote
 * **/deletequote/{id}** (DELETE) - delete a quote
+
+## Dockerizing the Application
+Creating a *Dockerfile* in the app root, an then building the image:
+```
+$ docker build -t quoteapp .
+```
+
+Running the container:
+```
+$ docker run --network=host -p 8080:8080 quoteapp
+```
