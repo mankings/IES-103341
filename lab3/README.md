@@ -9,7 +9,6 @@
 * it's a *@Component* annotation's specialization
 
 ***@RestController***
-* é um controlador especial usado em serviços web RESTFul e o equivalente de @Controller + @ResponseBody.
 * it's a special controller used in *RESTful* web services and the equivalent to a *@Controller* + *@ResponseBody*
 * indicates that the class is a controller where the *@RequestMapping* methods assume *@ResponseBody*'s semantics by default
 * it's a *@Controller* annotation's specialization
